@@ -1,0 +1,65 @@
+class User:
+  def _init_(self, fullname, username, email, phone, password, confirmpass, active=AccountStatus.ACTIVE):
+    self.fullname = fullname
+    self.username = username
+    self.email = email
+    self.phone = phone
+    self.password = password
+    self.confirmpass = confirmpass
+    self.active = active
+
+class AccountStatus:
+  ACTIVE = 1
+  NOT_ACTIVE = 2
+
+users = []
+
+def main():
+  opt = int(input("Please choose your option:\n1. SignUp\n2. Login\n3. Exit\n\nYour choise: "))
+
+  if opt == 1:
+    active = int(input("1-Active\n2-Not Active\n\nEnter your option: "))
+    fullname = input("Enter Your Full name : \t")
+    email = input("Enter Your email : \t")
+    phone = input("Enter Your phoneNumber : \t")
+    password = input("Enter Your Password : \t")
+    confirmpass = input(" Confirm Your Password : \t")
+
+    if password != confirmpass:
+      print("Passwords do not match!")
+      return
+
+    username = email.split("@")[0]
+    user = User(fullname, username, email, phone, password, confirmpass, active)
+
+    users.append(user)
+
+    print("User details:")
+    print("Full name: {}".format(user.fullname))
+    print("Username: {}".format(user.username))
+    print("Email: {}".format(user.email))
+    print("Phone: {}".format(user.phone))
+    print("Account status: {}".format(user.active))
+
+  elif opt == 2:
+    username = input("Enter your username: ")
+    password = input("Enter your password: ")
+
+    user = User(None, username, None, None, password, None)
+
+    for u in users:
+      if u.username == user.username and u.password == user.password:
+        print("Welcome, {}!".format(u.fullname))
+        return
+
+    print("User not found!")
+
+  elif opt == 3:
+    exit(0)
+
+  else:
+    print("Invalid option!")
+    return
+
+if _name_ == "_main_":
+  main()
